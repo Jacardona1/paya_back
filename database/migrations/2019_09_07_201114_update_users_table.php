@@ -22,6 +22,7 @@ class UpdateUsersTable extends Migration
             $table->boolean('estado')->default(0);
             $table->unsignedBigInteger('user_tipo_id')->nullable();
             $table->unsignedBigInteger('documento_tipo_id')->nullable();
+            $table->unsignedBigInteger('user_empresa_id')->nullable();
         });
     }
 
