@@ -20,8 +20,9 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', 'Auth\AuthController@logout');
-        Route::get('user', 'Auth\AuthController@user');
+        Route::get('UserSeeder', 'Auth\AuthController@user');
         Route::resource('empresa', 'EmpresaController');
+        Route::resource('usuario', 'UsuarioController');
 
     });
 });

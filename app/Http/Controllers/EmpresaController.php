@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Libs\ApiResponse;
 use App\Models\Empresa;
 
@@ -61,7 +60,7 @@ class EmpresaController extends Controller
         $data->telefono = $this->Request->telefono;
         $data->celular = $this->Request->celular;
         $data->save();
-        return true;
+        return response()->json(['message' => $this->ApiResponse->getResponseOk(), 'data' => true]);
     }
 
     /**
@@ -72,7 +71,8 @@ class EmpresaController extends Controller
      */
     public function show($id)
     {
-        //
+        $data =  $this->model->find($id);
+        return response()->json(['message' => $this->ApiResponse->getResponseOk(), 'data' => $data]);
     }
 
     /**

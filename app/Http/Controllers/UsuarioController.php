@@ -1,22 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Usuarios;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Libs\ApiResponse;
-use App\Models\User;
+use App\Models\Usuario;
 
 class UsuarioController extends Controller
 {
 
 
     private $ApiResponse;
+    private $Request;
+    private $model;
 
-    public function __construct(ApiResponse $ApiResponse, Request $request)
+
+    public function __construct(ApiResponse $ApiResponse, Request $Request, Usuario $model)
     {
         $this->ApiResponse = $ApiResponse;
-        $this->Request = $request;
+        $this->Request = $Request;
+        $this->model = $model;
     }
 
     /**
@@ -26,7 +29,8 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-
+        $data =  $this->model->all();
+        return response()->json(['message' => $this->ApiResponse->getResponseOk(), 'data' => $data]);
     }
 
     /**
@@ -58,8 +62,7 @@ class UsuarioController extends Controller
      */
     public function show($id)
     {
-        $users = new User();
-        $data =  $users->where('user_tipo_id',$id)->get();
+        $data =  $this->model->where('user_tipo_id',$id)->get();
         return response()->json(['message' => $this->ApiResponse->getResponseOk(), 'data' => $data]);
     }
 
@@ -71,7 +74,8 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data =  $this->model->find($id);
+        return response()->json(['message' => $this->ApiResponse->getResponseOk(), 'data' => $data]);
     }
 
     /**
@@ -94,6 +98,7 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data =  $this->model->find($id);
+        $data->delete();
     }
 }
