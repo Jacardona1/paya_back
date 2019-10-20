@@ -49,9 +49,21 @@ class UsuarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        $data = $this->model;
+        $data->nombres = $this->Request->nombres;
+        $data->apellidos = $this->Request->apellidos;
+        $data->direccion = $this->Request->direccion;
+        $data->telefono = $this->Request->telefono;
+        $data->email = $this->Request->telefono;
+        $data->password = $this->Request->contrasena;
+        $data->user_tipo_id = $this->Request->tipoUsuario;
+        $data->documento_tipo_id = $this->Request->tipoDocumento;
+        $data->numero_documento = $this->Request->numeroDocumento;
+        $data->name = $this->Request->numeroDocumento;
+        $data->save();
+        return response()->json(['message' => $this->ApiResponse->getResponseOk(), 'data' => true]);
     }
 
     /**
@@ -85,9 +97,23 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        $data =  $this->model->find($id);
+        $data->nombres = $this->Request->nombres;
+        $data->apellidos = $this->Request->apellidos;
+        $data->direccion = $this->Request->direccion;
+        $data->telefono = $this->Request->telefono;
+        $data->email = $this->Request->telefono;
+        if($this->Request->contrasena){
+            $data->password = bcrypt($this->Request->contrasena);
+        }
+        $data->user_tipo_id = $this->Request->tipoUsuario;
+        $data->documento_tipo_id = $this->Request->tipoDocumento;
+        $data->numero_documento = $this->Request->numeroDocumento;
+        $data->name = $this->Request->numeroDocumento;
+        $data->save();
+        return response()->json(['message' => $this->ApiResponse->getResponseOk(), 'data' => $data]);
     }
 
     /**
