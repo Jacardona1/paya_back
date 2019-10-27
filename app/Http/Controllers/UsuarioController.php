@@ -72,7 +72,7 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,$empresa)
     {
         $data =  $this->model->where('user_tipo_id',$id)->get();
         return response()->json(['message' => $this->ApiResponse->getResponseOk(), 'data' => $data]);
@@ -126,5 +126,11 @@ class UsuarioController extends Controller
     {
         $data =  $this->model->find($id);
         $data->delete();
+    }
+
+    public function showEmployes($id)
+    {
+        $data =  $this->model->where('user_tipo_id',3)->where('user_empresa_id',$id)->get();
+        return response()->json(['message' => $this->ApiResponse->getResponseOk(), 'data' => $data]);
     }
 }
