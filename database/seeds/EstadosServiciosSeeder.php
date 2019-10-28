@@ -32,5 +32,13 @@ class EstadosServiciosSeeder extends Seeder
             'nombre' => 'Entregado ',
             'created_at' => date('Y-m-d H:m:s')
         ]);
+        DB::table('estados_servicios')->insert([
+            'nombre' => 'Finalizado ',
+            'created_at' => date('Y-m-d H:m:s')
+        ]);
+        DB::table('estados_servicios')->insert([
+            'nombre' => 'Cancelado ',
+            'created_at' => date('Y-m-d H:m:s')
+        ]);
     }
 }

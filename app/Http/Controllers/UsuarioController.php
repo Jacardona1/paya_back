@@ -56,12 +56,15 @@ class UsuarioController extends Controller
         $data->apellidos = $this->Request->apellidos;
         $data->direccion = $this->Request->direccion;
         $data->telefono = $this->Request->telefono;
-        $data->email = $this->Request->telefono;
-        $data->password = $this->Request->contrasena;
+        $data->email = $this->Request->email;
+        $data->password = bcrypt($this->Request->contrasena);
         $data->user_tipo_id = $this->Request->tipoUsuario;
         $data->documento_tipo_id = $this->Request->tipoDocumento;
         $data->numero_documento = $this->Request->numeroDocumento;
         $data->name = $this->Request->numeroDocumento;
+        if($this->Request->empresa){
+            $data->user_empresa_id = $this->Request->empresa;
+        }
         $data->save();
         return response()->json(['message' => $this->ApiResponse->getResponseOk(), 'data' => true]);
     }
@@ -72,7 +75,7 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id,$empresa)
+    public function show($id)
     {
         $data =  $this->model->where('user_tipo_id',$id)->get();
         return response()->json(['message' => $this->ApiResponse->getResponseOk(), 'data' => $data]);
@@ -130,7 +133,11 @@ class UsuarioController extends Controller
 
     public function showEmployes($id)
     {
-        $data =  $this->model->where('user_tipo_id',3)->where('user_empresa_id',$id)->get();
+        if($id){
+            $data =  $this->model->where('user_tipo_id',3)->where('user_empresa_id',$id)->get();
+        }else{
+            $data = $this->model->where('user_tipo_id',3)->get();
+        }
         return response()->json(['message' => $this->ApiResponse->getResponseOk(), 'data' => $data]);
     }
 }
